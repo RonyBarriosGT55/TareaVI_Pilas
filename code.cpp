@@ -93,8 +93,36 @@ case 3:
   }
     break;
   
+case 4:
+    mostrar(pilaAcciones, "Pila de acciones actuales");
+    break;
 
-cout
+case 5:
+    mostrar(pilaRehacer, "pila de Rehacer");
+    break;
+
+case 6:
+  mostrarEstado(pilaAcciones, pilaRehacer);
+  break;
+
+case 7:
+  cout << "\nSaliendo del programa ";
+  break;
+
+default:
+  cout << "Opcion invalida. Intente de nuevo.\n";
+  
+  }
+
+    } while (opcion != 7);
+
+    // Liberar memoria al finalizar
+    limpiarPila(pilaAcciones);
+    limpiarPila(pilaRehacer);
+
+    cout << "Memoria liberada correctamente.\n";
+    return 0;
+}
 
 
 
