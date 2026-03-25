@@ -13,12 +13,26 @@ nuevo->accion =texto;
 nuevo->siguiente = tope;
 tope = nuevo;
 }
+
+//Funcion POP
+// Saca una ccion de la pila y devuelve verdadero si pudo sacar devuelve false si la pila está vacía
+bool pop(Nodo*& tope, string& textoExtraido){
+  if(tope == NULL) {
+    return false;
+  }
+  Nodo* auxiliar = tope;
+  textoExtraido = auxiliar->accion;
+  tope = tope->siguiente;
+  delete auxiliar;
+  return true;
+}
+
 //Funcion mostrar
 //muestra el contenido de la pila
 void mostrar(Nodo* tope, string nombrePila) {
-  cout << " =================================================";
+  cout << " ================================================="<< endl;
   cout << nombrePila << endl;
-  cout << " =================================================;
+  cout << " ================================================="<< endl;
 
     if (tope == NULL) {
   cout << "La pila esta vacia. ";
@@ -32,14 +46,27 @@ void mostrar(Nodo* tope, string nombrePila) {
   posicion++;
   }
 }
+
 //Funcion mostrar estado actual
 void mostrarEstado(Nodo* acciones, Nodo* rehacer) {
     mostrar(acciones, "Pila de acciones actuales");
     mostrar(rehacer, "Pila de Reacher");
 }
+
+//Funcion Limpiar Pila Elimina todos los Nodos
+void limpiarPila(Nodo*& tope) {
+  Nodo* auxiliar;
+
+  while (tope != NULL) {
+      auxiliar = tope;
+  tope = tope->siguiente;
+  delete auxiliar;
+  }
+}  
+
 //Funcion Principal
 int main() {
-    Nodo* pilaAcciones = NULLL; // Pila principal
+    Nodo* pilaAcciones = NULL; // Pila principal
     Nodo* pilaRehacer = NULL; // Pilas de acciones desechas.
 
     int opcion;
@@ -69,29 +96,30 @@ case 1:
     getline(cin, accion);
 
     push(pilaAcciones, accion);
+  
   // cada vez que se realiza la accion nueva se limpa la pila de rehacer
-  limpiar pila(pilaRehacer);
+  limpiarPila(pilaRehacer);
   cout <<"Accion realizada correctamente. \n";
-  cout <<"Accion rreahacer fue eliminada." \n";
+  cout <<"Accion reahacer fue eliminada. \n";
   break;
 
 case 2:
   if (pop(pilaAcciones, accionMovida)) {
       push(pilaRehacer, accionMovida);
-      cout <<" se deshizo la ccion: " << accionMovida << endl;
+      cout <<" se deshizo la accion: " << accionMovida << endl;
   } else {
       cout << " No hay acciones para deshacer. \n";
   }
   break;
 
-case 3:
-  if(pop(pilaAcciones, accionMovida)) {
-      push(pilaRehacer, accionMovida);
-      cout << "se Deshizo la accion:"  << accionMovida <<endl;
-  }  else {
-        cout << " No hay acciones para deshacer. \n";
+case 3: // REHACER
+  if(pop(pilaRehacer, accionMovida)) { // Saca de Rehacer
+      push(pilaAcciones, accionMovida); // Mete en Acciones
+      cout << "Se rehizo la accion: " << accionMovida << endl;
+  } else {
+      cout << "No hay acciones para rehacer.\n";
   }
-    break;
+  break;
   
 case 4:
     mostrar(pilaAcciones, "Pila de acciones actuales");
